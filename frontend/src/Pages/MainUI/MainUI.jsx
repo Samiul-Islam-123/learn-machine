@@ -64,24 +64,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 function MainUIContent() {
-  const { feature } = useParams();
   const { mode, toggleColorMode } = useThemeContext();
   const [open, setOpen] = React.useState(true);
   const features = ["learn", "quiz", "performance", "roadmap", "settings"]
-  const [currentFeature, setCurrentFeature] = React.useState("");
   const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
-  React.useEffect(() => {
-    if (feature) {
-      if (features.includes(feature)) {
-        setCurrentFeature(feature.charAt(0).toUpperCase() + feature.slice(1))
-      }
-    }
-  }, [feature])
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -113,12 +104,12 @@ function MainUIContent() {
           </IconButton>
           <Typography
             component="h1"
-            variant="h6"
+            variant="h5"
             color="inherit"
             noWrap
             sx={{ flexGrow: 1 }}
           >
-            {currentFeature}
+            Learn Machine
           </Typography>
           <IconButton color="inherit" onClick={toggleColorMode}>
             {mode === 'dark' ? <Icon>
@@ -167,7 +158,7 @@ function MainUIContent() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
 
           {/**main content renders here */}
 

@@ -10,7 +10,7 @@ function App() {
     <>
       <Routes>
         <Route exact path='/' element={<LandingPage />} />
-        <Route exact path='/app/:feature' element={<MainUI />} />
+        <Route exact path='/app/*' element={<MainUI />} />
       </Routes>
     </>
   );
