@@ -4,12 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom"
+import { ThemeContextProvider } from './Contexts/ThemeContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ThemeContextProvider>
+
   <BrowserRouter>
      <App />
   </BrowserRouter>
+  </ThemeContextProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
