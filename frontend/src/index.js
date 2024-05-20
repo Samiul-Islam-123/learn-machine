@@ -3,16 +3,26 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter} from "react-router-dom"
+import { BrowserRouter } from "react-router-dom"
 import { ThemeContextProvider } from './Contexts/ThemeContext';
+import { SocketProvider } from './Contexts/SocketProvider';
+import { MessageProvider } from './Contexts/MessageProvider';
+import { LoadingProvider } from './Contexts/LoadingContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeContextProvider>
 
-  <BrowserRouter>
-     <App />
-  </BrowserRouter>
+    <BrowserRouter>
+      <SocketProvider>
+        <LoadingProvider>
+
+        <MessageProvider>
+        <App />
+        </MessageProvider>
+        </LoadingProvider>
+      </SocketProvider>
+    </BrowserRouter>
   </ThemeContextProvider>
 );
 

@@ -11,9 +11,10 @@ import { MainListItems, SecondaryListItems } from './listItems'; // Import MainL
 import { ThemeContextProvider, useThemeContext } from '../../Contexts/ThemeContext'; // Adjust the import path as necessary
 import AppController from '../../RoutesController/AppController';
 import { useParams } from 'react-router-dom';
-
+import { useLoading } from '../../Contexts/LoadingContext';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
+import LinearProgress from '@mui/material/LinearProgress';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -68,6 +69,8 @@ function MainUIContent() {
   const [open, setOpen] = React.useState(true);
   const features = ["learn", "quiz", "performance", "roadmap", "settings"]
   const navigate = useNavigate();
+
+  const {loading} = useLoading();
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -160,6 +163,7 @@ function MainUIContent() {
         <Toolbar />
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
 
+        {loading === true && (<><LinearProgress /></>)}
           {/**main content renders here */}
 
           <AppController />
