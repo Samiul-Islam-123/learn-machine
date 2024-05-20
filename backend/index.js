@@ -54,7 +54,6 @@ io.on('connection', socket=>{
     //stream the response
     for await(const chunk of response.stream){
       const chunkText = chunk.text();
-      console.log(chunkText)
       socket.emit('processed-prompt', {
         text : chunkText,
         ID : ID,
