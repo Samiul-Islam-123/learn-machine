@@ -16,9 +16,8 @@ dotenv.config()
 
 const { v4: uuid } = require("uuid")
 
-const { GoogleGenerativeAI, FunctionDeclarationSchemaType } = require('@google/generative-ai');
-const { dot } = require('node:test/reporters');
-const { MakeGoogleSearch } = require('./Services/WebScrapper');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
+const { MakeGoogleSearch, ScrapeData, scrapeImages } = require('./Services/WebScrapper');
 const { ScrapeInformationFromWebForstudyMaterial, getExchangeRateFunctionDeclaration } = require('./GeminiFunctions/Functions');
 const makeApiRequest = require('./Services/testFunction');
 const genAI = new GoogleGenerativeAI(`${process.env.GEMINI_API_KEY}`);
@@ -48,6 +47,7 @@ io.on('connection', socket => {
   socket.on('process-prompt', async data => {
     var model;
     if (data.prompt_type === 'text') {
+      //console.log(data)
       //gemini-pro
       model = genAI.getGenerativeModel({
         model: "gemini-pro",
@@ -55,105 +55,53 @@ io.on('connection', socket => {
           functionDeclarations: [getExchangeRateFunctionDeclaration, ScrapeInformationFromWebForstudyMaterial]
         }
       })
+
+      if (data.feature === 'material') {
+        // console.log("Material...")
+        //Scrape Data from web
+        socket.emit('material-status', "Searching for " + data.topic)
+        const ScrappedData = await ScrapeData(data.topic)
+        var images;
+
+        //console.log(ScrappedData[0].textContent)
+        // //Send it to Gemini to Format better
+        console.log(`${ScrappedData[0].textContent}`)
+        //console.log("Generating content...")
+        socket.emit('material-status', "Generating Content...")
+
+        const result = await model.generateContent(`${ScrappedData[0].textContent}, these are the data that i have got from internet \n${data.prompt}`)
+        //console.log(`${ScrapeData.textContent}\n${data.prompt}`)
+        const response = await result.response;
+        const textOutput = response.text();
+        //console.log(textOutput)
+        socket.emit('processed-prompt-material', textOutput)
+        socket.emit('material-status', "")
+
+        // //wallah, you got the output
+
+      }
     }
 
-    if (data.prompt_type === 'file') {
+    else if (data.prompt_type === 'file') {
       //gemini-pro-vision
       model = genAI.getGenerativeModel({
         model: "gemini-vision-pro"
       })
-    }
 
-    // const chat = model.startChat({
-    //   history: [
-    //     {
-    //       role: "user",
-    //       parts: [{ text: "Hello, you are a virtual tutor who can teach students in a exiting way. Your name i Silver" }],
-    //     },
-    //     {
-    //       role: "model",
-    //       parts: [{ text: "Ok sir!" }],
-    //     },
-    //   ],
-    //   generationConfig: {
-    //     maxOutputTokens: 2000,
-    //   },
-    // });
+      console.log(data)
 
-
-
-    const chat = model.startChat();
-    const prompt = "Can you find some online resources for BJT";
-
-    // Send the message to the model.
-    const result = await chat.sendMessageStream(prompt);
-
-
-
-    // For simplicity, this uses the first function call found.
-    //const call = result.stream.response.functionCalls()[0];
-
-    // if (call) {
-    //   // Call the executable function named in the function call
-    //   // with the arguments specified in the function call and
-    //   // let it call the hypothetical API.
-    //   const apiResponse = await functions[call.name](call.args);
-
-    //   // Send the API response back to the model so it can generate
-    //   // a text response that can be displayed to the user.
-    //   const result2 = await chat.sendMessage([{functionResponse: {
-    //     name: 'getExchangeRate',
-    //     response: apiResponse
-    //   }}]);
-
-    //   // Log the text response.
-    //   console.log(result2.response.text());
-    // }
-
-    for await (const chunk of result.stream) {
-      const chunkText = chunk.text();
-      const call = chunk.functionCalls()[0];
-      console.log(call)
-
-      if (call) {
-        // Call the executable function named in the function call
-        // with the arguments specified in the function call and
-        // let it call the hypothetical API.
-        const apiResponse = await functions[call.name](call.args);
-
-        // Send the API response back to the model so it can generate
-        // a text response that can be displayed to the user.
-        const result2 = await chat.sendMessage([{
-          functionResponse: {
-            name: 'getExchangeRate',
-            response: apiResponse
-          }
-        }]);
-
-        // Log the text response.
-        console.log(result2.response.text());
-      }
+      // const result = await model.generateContent([data.prompt, data.files]);
+      // const response = await result.response;
+      // const text = response.text();
+      // console.log(text);
     }
 
 
 
-    // //generate response
-    // const response = await chat.sendMessageStream(data.prompt);
 
-    // const ID = uuid();
-    // //stream the response
-    // for await(const chunk of response.stream){
-    //   const chunkText = chunk.text();
-    //   console.log(chunk.functionCalls)
-    //   socket.emit('processed-prompt', {
-    //     text : chunkText,
-    //     ID : ID,
-    //     prompt : data.prompt,
-    //     functions : chunk.functionCalls
-    //   })
-    // }
-    // socket.emit('response-end');
-  })
+
+
+  });
 
 
   socket.on('disconnect', () => {
