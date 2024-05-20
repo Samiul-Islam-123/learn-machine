@@ -35,7 +35,7 @@ export default function Hero() {
           Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your needs. Elevate your experience with top-tier features and services.
         </Typography>
         <Button variant="contained" onClick={()=>{
-          navigate('/app/learn')
+          navigate('/app/material')
         }} color="primary" size="large" sx={{ mt: 4 }}>
           Get Started
         </Button>

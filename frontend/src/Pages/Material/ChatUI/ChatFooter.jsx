@@ -1,5 +1,5 @@
 import { Icon, IconButton, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { useSocket } from '../../../Contexts/SocketProvider';
@@ -8,18 +8,37 @@ import { useMessages } from '../../../Contexts/MessageProvider';
 function ChatFooter() {
     const socket = useSocket();
     const [userPrompt, setUserPrompt] = useState("");
-    const {addMessage} = useMessages();
+    const [selectedFiles, setSelectedFiles] = useState([]);
+    const fileInputRef = useRef(null);
+    const { addMessage } = useMessages();
 
-    const handleSendMessage = () => {
+    const handleSendMessage = async () => {
         if (userPrompt.trim() !== "") {
+            const formData = new FormData();
+            formData.append('prompt', userPrompt);
+            
+            // Append files if selected
+            if (selectedFiles.length > 0) {
+                selectedFiles.forEach((file, index) => {
+                    formData.append(`file${index}`, file);
+                });
+            }
+            
             socket.emit('process-prompt', {
-                feature: "learn",
-                prompt: userPrompt,
-                prompt_type : "text"
+                feature: "doubt",
+                prompt_type: "file",
+                data: formData, // Send files as FormData
             });
-            addMessage('user', userPrompt)
+            addMessage('user', userPrompt);
             setUserPrompt(""); // Clear the input field after sending
+            setSelectedFiles([]); // Clear selected files
         }
+    };
+    
+
+    const handleFileInputChange = (e) => {
+        const files = Array.from(e.target.files);
+        setSelectedFiles(files);
     };
 
     const handleKeyPress = (e) => {
@@ -31,7 +50,7 @@ function ChatFooter() {
 
     return (
         <div style={{ display: "flex", marginTop: "5px" }}>
-            <IconButton>
+            <IconButton onClick={() => fileInputRef.current.click()}>
                 <Icon>
                     <UploadFileIcon />
                 </Icon>
@@ -49,6 +68,14 @@ function ChatFooter() {
                     <SendIcon />
                 </Icon>
             </IconButton>
+            {/* Hidden file input element */}
+            <input
+                type="file"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                multiple
+                onChange={handleFileInputChange}
+            />
         </div>
     );
 }

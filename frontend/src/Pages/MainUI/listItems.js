@@ -12,17 +12,24 @@ import RouteIcon from '@mui/icons-material/Route';
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
+import PsychologyAltIcon from '@mui/icons-material/PsychologyAlt';
 
 const MainListItems = () => {
   const navigate = useNavigate(); // Use useNavigate hook
   
   return (
     <React.Fragment>
-      <ListItemButton onClick={() => navigate('/app/learn')}>
+      <ListItemButton onClick={() => navigate('/app/material')}>
         <ListItemIcon>
           <SchoolIcon />
         </ListItemIcon>
-        <ListItemText primary="Learn Today" />
+        <ListItemText primary="Study Materials" />
+      </ListItemButton>
+      <ListItemButton onClick={() => navigate('/app/doubts')}>
+        <ListItemIcon>
+          <PsychologyAltIcon />
+        </ListItemIcon>
+        <ListItemText primary="Doubts" />
       </ListItemButton>
       <ListItemButton onClick={() => navigate('/app/quiz')}>
         <ListItemIcon>
