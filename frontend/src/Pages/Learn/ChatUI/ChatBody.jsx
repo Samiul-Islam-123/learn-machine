@@ -13,6 +13,7 @@ function ChatBody() {
     useEffect(() => {
         if (socket) {
             socket.on('processed-prompt', (data) => {
+                console.log(data)
                 if (loading) {
                     updateMessage('bot', data.text);
                 } else {
