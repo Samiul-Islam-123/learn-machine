@@ -43,7 +43,6 @@ function LandingPageContent() {
         <Divider />
         <Footer />
       </Box>
-      <ToggleCustomTheme showCustomTheme={showCustomTheme} toggleCustomTheme={toggleCustomTheme} />
     </>
   );
 }
