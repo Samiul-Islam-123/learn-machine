@@ -26,17 +26,17 @@ To run this project locally, follow these steps:
 
 2. **Install dependencies:**
     ```bash
-  cd frontend
-  npm install
-  cd ..
-  cd backend
-  npm install
-  #or
-  cd frontend
-  yarn install
-  cd ..
-  cd backend
-  yarn install
+     cd frontend
+     npm install
+     cd ..
+     cd backend
+     npm install
+     #or
+     cd frontend
+     yarn install
+     cd ..
+     cd backend
+     yarn install
 
   This will install dependencies in both frontend and backend directories
 
