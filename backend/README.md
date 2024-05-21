@@ -21,6 +21,11 @@ This backend serves as the core of the application, providing the following func
 - **Real-time Communication:**
   - Establishes real-time communication between the backend and frontend using Socket.IO.
   - Emits events to the frontend to provide updates on AI processing status and send generated responses.
+ 
+**Start the development server**
+    ```bash
+    cd backend
+    npm run dev
 
 **Workflow**
 
