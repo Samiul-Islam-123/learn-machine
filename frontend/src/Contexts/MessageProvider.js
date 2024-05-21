@@ -8,6 +8,7 @@ export function useMessages() {
 
 export function MessageProvider({ children }) {
     const [messages, setMessages] = useState([]);
+    const [lastChunk, setLastChunk] = useState('');
 
     const addMessage = (sender, message) => {
         setMessages(prevMessages => [...prevMessages, { sender, message }]);
@@ -18,7 +19,11 @@ export function MessageProvider({ children }) {
             const messagesCopy = [...prevMessages];
             const lastMessageIndex = messagesCopy.length - 1;
             if (messagesCopy[lastMessageIndex]?.sender === sender) {
-                messagesCopy[lastMessageIndex].message += newChunk;
+                // Append the new chunk only if it's not a duplicate of the last one
+                if (newChunk !== lastChunk) {
+                    messagesCopy[lastMessageIndex].message += newChunk;
+                    setLastChunk(newChunk);
+                }
             }
             return messagesCopy;
         });

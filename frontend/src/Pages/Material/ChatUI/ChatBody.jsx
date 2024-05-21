@@ -12,7 +12,7 @@ function ChatBody() {
 
     useEffect(() => {
         if (socket) {
-            socket.on('processed-prompt', (data) => {
+            socket.on('prompt-response-doubt', (data) => {
                 console.log(data)
                 if (loading) {
                     updateMessage('bot', data.text);
@@ -20,16 +20,16 @@ function ChatBody() {
                     addMessage('bot', data.text);
                     startLoading(); // Start loading when a new response begins
                 }
-            });
-
-            socket.on('response-end', () => {
-                finishLoading(); // Finish loading when the response ends
                 scrollToBottom();
             });
 
+            socket.on('response-doubt-end', () => {
+                finishLoading(); // Finish loading when the response ends
+            });
+
             return () => {
-                socket.off('processed-prompt');
-                socket.off('response-end');
+                socket.off('prompt-response-doubt');
+                socket.off('response-doubt-end');
             };
         }
     }, [socket, addMessage, updateMessage, loading, startLoading, finishLoading]);

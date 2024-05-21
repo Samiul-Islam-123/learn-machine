@@ -88,13 +88,13 @@ function Material() {
 
   return (
     <>
-      <Container>
+      <Container >
         <Typography variant="h4" align="center" gutterBottom>
           Study Material Generator
         </Typography>
         <form onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} >
               <TextField
                 onChange={(e) => setTopic(e.target.value)}
                 variant="outlined"

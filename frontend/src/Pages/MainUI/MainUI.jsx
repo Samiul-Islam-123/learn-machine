@@ -161,7 +161,7 @@ function MainUIContent() {
         }}
       >
         <Toolbar />
-        <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+        <Container maxWidth="xxl" sx={{ mt: 4, mb: 4 }}>
 
         {loading === true && (<><LinearProgress /></>)}
           {/**main content renders here */}

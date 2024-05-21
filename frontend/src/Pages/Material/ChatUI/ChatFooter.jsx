@@ -14,27 +14,39 @@ function ChatFooter() {
 
     const handleSendMessage = async () => {
         if (userPrompt.trim() !== "") {
-            const formData = new FormData();
-            formData.append('prompt', userPrompt);
-            
-            // Append files if selected
-            if (selectedFiles.length > 0) {
-                selectedFiles.forEach((file, index) => {
-                    formData.append(`file${index}`, file);
+            const filesDataPromises = selectedFiles.map(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                        resolve({
+                            name: file.name,
+                            type: file.type,
+                            data: reader.result.split(',')[1], // Base64 without prefix
+                        });
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
                 });
-            }
-            
-            socket.emit('process-prompt', {
-                feature: "doubt",
-                prompt_type: "file",
-                data: formData, // Send files as FormData
             });
-            addMessage('user', userPrompt);
-            setUserPrompt(""); // Clear the input field after sending
-            setSelectedFiles([]); // Clear selected files
+
+            try {
+                const filesData = await Promise.all(filesDataPromises);
+
+                socket.emit('process-prompt', {
+                    feature: "doubt",
+                    prompt_type: "file",
+                    prompt: userPrompt,
+                    files: filesData,
+                });
+
+                addMessage('user', userPrompt);
+                setUserPrompt(""); // Clear the input field after sending
+                setSelectedFiles([]); // Clear selected files
+            } catch (error) {
+                console.error('Error reading files:', error);
+            }
         }
     };
-    
 
     const handleFileInputChange = (e) => {
         const files = Array.from(e.target.files);

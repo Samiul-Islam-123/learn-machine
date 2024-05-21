@@ -29,7 +29,7 @@ export default function Hero() {
         marginTop : "10%"
       }}>
         <Typography variant="h2" gutterBottom>
-          Welcome to Learn Machine
+          Welcome to Learn Machine :)
         </Typography>
         <Typography variant="body1" color="text.secondary" gutterBottom>
           Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your needs. Elevate your experience with top-tier features and services.
