@@ -1,6 +1,6 @@
-# AI-Based Learning Platform
+# Learn Machine
 
-Welcome to the AI-Based Learning Platform! This web application leverages artificial intelligence to provide personalized study material, solve problems and doubts, and generate roadmaps for various subjects. Some features are still under progress, and we appreciate your patience and contributions.
+Welcome to Learn Machine! This web application leverages artificial intelligence to provide personalized study material, solve problems and doubts, and generate roadmaps for various subjects. Some features are still under progress, and we appreciate your patience and contributions.
 
 ## Features
 
@@ -13,7 +13,7 @@ Welcome to the AI-Based Learning Platform! This web application leverages artifi
 
 ## Demo
 
-You can check out a live demo of the application [here](#). (Replace with your demo link)
+You can check out a live demo of the application [here](https://learn-machine.vercel.app/). (Replace with your demo link)
 
 ## Installation
 
