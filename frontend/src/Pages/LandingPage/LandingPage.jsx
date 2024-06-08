@@ -13,6 +13,8 @@ import FAQ from '../../Components/FAQ';
 import Footer from '../../Components/Footer';
 import ToggleCustomTheme from './ToggleCustomTheme';
 import { ThemeContextProvider, useThemeContext } from '../../Contexts/ThemeContext';
+import LocomotiveScroll from 'locomotive-scroll';
+
 
 export default function LandingPage() {
   return (
@@ -25,15 +27,19 @@ export default function LandingPage() {
 
 function LandingPageContent() {
   const { mode, toggleColorMode, showCustomTheme, toggleCustomTheme } = useThemeContext();
+  document.addEventListener("DOMContentLoaded", () => {
+    const scroll = new LocomotiveScroll({
+        el: document.querySelector('wrapper'),
+        smooth: true
+    });
+});
 
   return (
-    <>
+    <div className='wrapper'>
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
-        <Features />
-        <Divider />
-        <Testimonials />
+        
         <Divider />
         <Highlights />
         <Divider />
@@ -43,6 +49,6 @@ function LandingPageContent() {
         <Divider />
         <Footer />
       </Box>
-    </>
+    </div>
   );
 }

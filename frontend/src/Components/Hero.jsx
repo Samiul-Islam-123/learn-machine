@@ -19,9 +19,9 @@ export default function Hero() {
           theme.palette.mode === 'light'
             ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
             : `linear-gradient(#02294F, ${alpha('#090E10', 0.0)})`,
-        backgroundSize: '100% 50%',
+        backgroundSize: '100% 100%',
         backgroundRepeat: 'no-repeat',
-        py: 8,
+        py: 20,
         textAlign: 'center',
       })}
     >
@@ -29,10 +29,10 @@ export default function Hero() {
         marginTop : "10%"
       }}>
         <Typography variant="h2" gutterBottom>
-          Welcome to Learn Machine :)
+          Learning Becomes Easy
         </Typography>
         <Typography variant="body1" color="text.secondary" gutterBottom>
-          Explore our cutting-edge dashboard, delivering high-quality solutions tailored to your needs. Elevate your experience with top-tier features and services.
+          Explore our learning platform, delivering high-quality solutions tailored to your needs. Elevate your experience with top-tier features and services.
         </Typography>
         <Button variant="contained" onClick={()=>{
           navigate('/app/material')
