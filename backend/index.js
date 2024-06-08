@@ -181,6 +181,8 @@ io.on('connection', socket => {
           })
         socket.emit('response-doubt-end');
 
+        console.log(outputText)
+
       } catch (error) {
         console.error(error);
         socket.emit('response', 'An error occurred');

@@ -8,21 +8,31 @@ import { ThemeContextProvider } from './Contexts/ThemeContext';
 import { SocketProvider } from './Contexts/SocketProvider';
 import { MessageProvider } from './Contexts/MessageProvider';
 import { LoadingProvider } from './Contexts/LoadingContext';
+import { ClerkProvider } from '@clerk/clerk-react'
+
+// Import your publishable key
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key")
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeContextProvider>
 
-    <BrowserRouter>
-      <SocketProvider>
-        <LoadingProvider>
+      <BrowserRouter>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+        <SocketProvider>
+          <LoadingProvider>
 
-        <MessageProvider>
-        <App />
-        </MessageProvider>
-        </LoadingProvider>
-      </SocketProvider>
-    </BrowserRouter>
+            <MessageProvider>
+              <App />
+            </MessageProvider>
+          </LoadingProvider>
+        </SocketProvider>
+    </ClerkProvider>
+      </BrowserRouter>
   </ThemeContextProvider>
 );
 

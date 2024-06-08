@@ -64,7 +64,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-function MainUIContent() {
+function MainUIContent({user}) {
   const { mode, toggleColorMode } = useThemeContext();
   const [open, setOpen] = React.useState(true);
   const features = ["learn", "quiz", "performance", "roadmap", "settings"]
@@ -92,6 +92,8 @@ function MainUIContent() {
           }} sx={{ marginRight: '50px', padding: 0 }}>
             <Avatar src={logo2} alt='logo' />
           </IconButton>
+
+          {console.log(user)}
 
           <IconButton
             edge="start"
@@ -175,10 +177,10 @@ function MainUIContent() {
   );
 }
 
-export default function MainUI() {
+export default function MainUI({user}) {
   return (
     <ThemeContextProvider>
-      <MainUIContent />
+      <MainUIContent user= {user}/>
     </ThemeContextProvider>
   );
 }
