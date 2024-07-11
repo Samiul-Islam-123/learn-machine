@@ -102,6 +102,12 @@ export default function Highlights() {
                   borderColor: 'grey.800',
                   background: 'transparent',
                   backgroundColor: 'grey.900',
+                  transition: 'transform 0.3s, box-shadow 0.3s',
+                  '&:hover': {
+                    transform: 'scale(1.05)',
+                    boxShadow: 3,
+                    backgroundColor: 'grey.800',
+                  },
                 }}
               >
                 <Box sx={{ opacity: '50%' }}>{item.icon}</Box>

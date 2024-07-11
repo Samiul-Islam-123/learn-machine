@@ -29,17 +29,17 @@ function LandingPageContent() {
   const { mode, toggleColorMode, showCustomTheme, toggleCustomTheme } = useThemeContext();
   document.addEventListener("DOMContentLoaded", () => {
     const scroll = new LocomotiveScroll({
-        el: document.querySelector('wrapper'),
-        smooth: true
+      el: document.querySelector('wrapper'),
+      smooth: true
     });
-});
+  });
 
   return (
     <div className='wrapper'>
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
-        
+
         <Divider />
         <Highlights />
         <Divider />
