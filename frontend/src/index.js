@@ -21,8 +21,8 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ThemeContextProvider>
 
-      <BrowserRouter>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <BrowserRouter>
+      <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
         <SocketProvider>
           <LoadingProvider>
 
@@ -31,8 +31,8 @@ root.render(
             </MessageProvider>
           </LoadingProvider>
         </SocketProvider>
-    </ClerkProvider>
-      </BrowserRouter>
+      </ClerkProvider>
+    </BrowserRouter>
   </ThemeContextProvider>
 );
 
