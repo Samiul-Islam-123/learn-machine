@@ -44,4 +44,4 @@ jobs:
       - name: Tunnel Frontend with Telebit
         run: |
           cd frontend
-          telebit http 3000  # Tunnel the frontend application using Telebit, replace '3000' with your frontend port if different
+          ~/telebit http 3000
