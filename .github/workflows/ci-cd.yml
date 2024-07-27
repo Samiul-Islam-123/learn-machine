@@ -31,7 +31,8 @@ jobs:
         run: |
           cd backend
           pm2 start index.js --name node  # Start your backend application using PM2, replace 'index.js' with your entry file if different
+          ./telebit http 5500          
           
-          -name: tunnel backend with telebit
-          run: | ./telebit http 5500          
+      
+         
 
